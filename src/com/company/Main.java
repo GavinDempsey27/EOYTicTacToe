@@ -15,7 +15,7 @@ public class Main {
         }
     }
 
-    //Gets players name
+    /*Gets players name
     Scanner myObj = new Scanner(System.in);
     System.out.print("What is your name Player 1? - ");
     String player1 = myObj.nextLine();
@@ -23,10 +23,10 @@ public class Main {
     System.out.print("What is your name Player 2? - ");
     String player2 = myObj.nextLine();
 
-    //Prints players name
+    Prints players name
     System.out.println("Player 1: " + player1);
     System.out.println("Player 2: " + player2);
-
+    */
     drawBoard(board);
 
 
@@ -38,6 +38,7 @@ public class Main {
 
             }
         }
+
     }
 
 
