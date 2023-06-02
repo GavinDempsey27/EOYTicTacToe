@@ -1,11 +1,45 @@
 package com.company;
-import java.util.Scanner;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
 
 public class Main {
 
     public static void main(String[] args) {
 
+        //setting gui title
+        JFrame frame = new JFrame("Tic Tac Toe");
+        //2d array of buttons
+        JButton[][] board = new JButton[3][3];
+        GridLayout grid = new GridLayout(3, 3);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300,300);
+        frame.setLayout(grid);
 
+
+        //looping through board to add buttons to frame
+        for(int r = 0; r < board.length; r++){
+            for (int c = 0; c < board[0].length; c++){
+                JButton btn = new JButton();
+                btn.setName(r + ":" + c);
+                btn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JButton btn = (JButton) e.getSource();
+                        butAction(btn, board);
+                    }
+                });
+               frame.add(btn);
+            }
+        }
+
+        //making the frame visible
+        frame.setVisible(true);
+
+
+
+/*
     //Gets players name
     Scanner myObj = new Scanner(System.in);
     System.out.print("What is your name Player 1? - ");
@@ -129,14 +163,18 @@ public class Main {
         }
 
 
+
+    }
+*/
+
+}
+
+    public static void butAction(JButton currentButton, JButton[][] board){
+        System.out.println(currentButton.getName());
+
     }
 
 
-
-
-
-//end of Main
-    }
 
     //function to check if board is full
     public static boolean boardIsFull(String[][] board){
