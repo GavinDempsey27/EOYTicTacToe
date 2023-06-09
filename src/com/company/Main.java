@@ -2,13 +2,14 @@ package com.company;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Scanner;
 import javax.swing.*;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        //setting gui title
+        //setting GUI
         JFrame frame = new JFrame("Tic Tac Toe");
         //2d array of buttons
         JButton[][] board = new JButton[3][3];
@@ -18,16 +19,17 @@ public class Main {
         frame.setLayout(grid);
 
 
-        //looping through board to add buttons to frame
+        //looping through board to add buttons to frame/board
         for(int r = 0; r < board.length; r++){
             for (int c = 0; c < board[0].length; c++){
                 JButton btn = new JButton();
+                board[r][c] = btn;
                 btn.setName(r + ":" + c);
                 btn.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         JButton btn = (JButton) e.getSource();
-                        butAction(btn, board);
+                        butAction(btn, board, frame);
                     }
                 });
                frame.add(btn);
@@ -129,7 +131,6 @@ public class Main {
                 drawBoard(board);
                 System.out.println(player1 + " has won!");
                 gameEnds = false;
-
             }
             else if (playerWon(board).equals("O")) {
                 drawBoard(board);
@@ -169,8 +170,54 @@ public class Main {
 
 }
 
-    public static void butAction(JButton currentButton, JButton[][] board){
-        System.out.println(currentButton.getName());
+    //instance variable for players turn
+    private static boolean isPlayer1;
+
+    //function for pressing button
+    public static void butAction(JButton currentButton, JButton[][] board, JFrame frame){
+
+        //checking if button pressed is valid
+        if(currentButton.getText().length() > 0){
+            return;
+        }
+        //placing X or O on board
+        if(isPlayer1){
+            currentButton.setText("X");
+        }
+        else{
+            currentButton.setText("O");
+        }
+
+        //switching player turns
+        isPlayer1 = !isPlayer1;
+
+        //printing player who won
+        if(playerWon(board).equals("X") || playerWon(board).equals("O")){
+            System.out.println("Player " + playerWon(board) + " has won!");
+        }
+
+        //variable for whoever won
+        String whoWon = playerWon(board);
+
+        if(whoWon.length() > 0){
+            //asking user if they want to continue to play
+            int result = JOptionPane.showConfirmDialog(frame, "Player " + whoWon + " do you want to keep playing?", "Game Finished", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+            //resetting game and board
+            if(result == JOptionPane.YES_OPTION){
+                for(int r = 0; r < board.length; r++){
+                    for(int c = 0; c < board[r].length; c++){
+                       board[r][c].setText("");
+                    }
+                }
+                isPlayer1 = false;
+                System.out.println("|Reset Game|");
+            }
+            //exiting game
+            else{
+                System.exit(0);
+            }
+        }
 
     }
 
@@ -191,29 +238,29 @@ public class Main {
 
 
     //function to check if either player has won
-    public static String playerWon(String[][] board){
+    public static String playerWon(JButton[][] board){
+
         //checking rows
         for(int r = 0; r < board.length; r++){
-            if(board[r][0].equals(board[r][1]) && board[r][1].equals(board[r][2])){
-                return board[r][0];
+            if(board[r][0].getText().equals((board[r][1].getText())) && board[r][1].getText().equals(board[r][2].getText())){
+                return board[r][0].getText();
             }
         }
 
         //checking columns
         for(int c = 0; c < board[0].length; c++){
-            if(board[0][c].equals(board[1][c]) && board[1][c].equals(board[2][c])){
-                return board[0][c];
+            if(board[0][c].getText().equals(board[1][c].getText()) && board[1][c].getText().equals(board[2][c].getText())){
+                return board[0][c].getText();
             }
         }
 
         //checking diagonals
-        if(board[0][0].equals(board[1][1]) && board[1][1].equals(board[2][2])){
-            return board[0][0];
+        if(board[0][0].getText().equals(board[1][1].getText()) && board[1][1].getText().equals(board[2][2].getText())){
+            return board[0][0].getText();
         }
-        if(board[2][0].equals(board[1][1]) & board[1][1].equals(board[0][2])){
-            return board[2][0];
+        if(board[2][0].getText().equals(board[1][1].getText()) & board[1][1].getText().equals(board[0][2].getText())){
+            return board[2][0].getText();
         }
-
 
         return "";
     }
@@ -227,6 +274,7 @@ public class Main {
             }
             System.out.println();
         }
+
     }
 
 
