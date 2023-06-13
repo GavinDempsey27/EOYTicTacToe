@@ -27,6 +27,7 @@ public class Main {
                 btn.setName(r + ":" + c);
                 btn.addActionListener(new ActionListener() {
                     @Override
+                    //button action
                     public void actionPerformed(ActionEvent e) {
                         JButton btn = (JButton) e.getSource();
                         butAction(btn, board, frame);
@@ -41,7 +42,7 @@ public class Main {
 
 
 
-/*
+/*Tic Tac Toe in the terminal
     //Gets players name
     Scanner myObj = new Scanner(System.in);
     System.out.print("What is your name Player 1? - ");
@@ -163,10 +164,9 @@ public class Main {
             gameQuit = false;
         }
 
-
-
     }
 */
+
 
 }
 
@@ -211,7 +211,7 @@ public class Main {
                     }
                 }
                 isPlayer1 = false;
-                System.out.println("|Reset Game|");
+                System.out.println("|RESET GAME|");
             }
             //exiting game
             else{
@@ -219,18 +219,35 @@ public class Main {
             }
         }
 
+        //checking if board is full/tie
+        if(boardIsFull(board)) {
+            System.out.println("The game is a tie!");
+            int tie = JOptionPane.showConfirmDialog(frame, "Do you want to restart the game?", "Tie Game", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (tie == JOptionPane.YES_OPTION) {
+                for (int r = 0; r < board.length; r++) {
+                    for (int c = 0; c < board[r].length; c++) {
+                        board[r][c].setText("");
+                    }
+                }
+                isPlayer1 = false;
+                System.out.println("|RESET GAME");
+            }
+            else{
+                System.exit(0);
+            }
+        }
+
+
     }
 
 
-
     //function to check if board is full
-    public static boolean boardIsFull(String[][] board){
+    public static boolean boardIsFull(JButton[][] board){
         for(int r = 0; r < board.length; r++) {
             for (int c = 0; c < board[r].length; c++) {
-                if(board[r][c].equals("-")){
+                if(board[r][c].getText().equals("")){
                     return false;
                 }
-
             }
         }
         return true;
@@ -261,7 +278,6 @@ public class Main {
         if(board[2][0].getText().equals(board[1][1].getText()) & board[1][1].getText().equals(board[0][2].getText())){
             return board[2][0].getText();
         }
-
         return "";
     }
 
