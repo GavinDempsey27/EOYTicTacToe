@@ -173,6 +173,10 @@ public class Main {
     //instance variable for players turn
     private static boolean isPlayer1;
 
+    private static int XCount;
+    private static int OCount;
+
+
     //function for pressing button
     public static void butAction(JButton currentButton, JButton[][] board, JFrame frame){
 
@@ -191,10 +195,18 @@ public class Main {
         //switching player turns
         isPlayer1 = !isPlayer1;
 
+        if(playerWon(board).equals("X")){
+            XCount++;
+        }
+        if(playerWon(board).equals("O")){
+            OCount++;
+        }
+
         //printing player who won
         if(playerWon(board).equals("X") || playerWon(board).equals("O")){
             System.out.println("Player " + playerWon(board) + " has won!");
         }
+
 
         //variable for whoever won
         String whoWon = playerWon(board);
@@ -211,10 +223,14 @@ public class Main {
                     }
                 }
                 isPlayer1 = false;
-                System.out.println("|RESET GAME|");
+                System.out.println("Player X - " + XCount);
+                System.out.println("Player O - " + OCount);
+                System.out.println("|NEW GAME|");
             }
             //exiting game
             else{
+                System.out.println("Player X - " + XCount);
+                System.out.println("Player O - " + OCount);
                 System.exit(0);
             }
         }
@@ -230,9 +246,13 @@ public class Main {
                     }
                 }
                 isPlayer1 = false;
-                System.out.println("|RESET GAME");
+                System.out.println("Player X - " + XCount);
+                System.out.println("Player O - " + OCount);
+                System.out.println("|NEW GAME|");
             }
             else{
+                System.out.println("Player X - " + XCount);
+                System.out.println("Player O - " + OCount);
                 System.exit(0);
             }
         }
